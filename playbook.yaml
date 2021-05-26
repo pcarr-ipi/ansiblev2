@@ -1,12 +1,23 @@
 - hosts: remote
-  gather_facts: false
+  gather_facts: false 
+
+  vars_prompt: 
+    - name: package
+      private: no
+      prompt: "Enter a package to install" 
+
+    - name: version
+      private: no
+      prompt: "Enter a version to install"
+ 
   vers: 
     src: test.txt
     dest: /home/ansible_user/test.txt
+
   tasks:
-    - name: copy file to remote server
-      copy:
-        src:  "{{ src }}"
-        dest:  "{{ dest }}"
+    - name: install chosen package
+      apt:
+        package:  "{{ package }}"
+        version:  "{{ version }}"
 
 
